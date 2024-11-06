@@ -12,19 +12,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('grocery_list')
 
-
-def create_new_list():
-    """
-    Add a worksheet for a new grocery list and name it based on user input.
-    Add headings to the worksheet.
-    """
-    new_list = input("Please enter a name for the list: ")
-    new_worksheet = SHEET.add_worksheet(title = new_list, rows="100", cols="20")
-    heading = ["Items", "Quantity", "Measurement"]
-    new_worksheet.append_row(heading)
-    return new_list
-
-
 def main_menu():
     """
     Provides user option to add new grocery list, view existing lists, or exit app.
@@ -36,6 +23,17 @@ def main_menu():
     return main_option
 
 
+def view_lists():
+    worksheet_list = SHEET
+    sheet_num = 0
+    for sheet in worksheet_list:
+        sheet_num += 1
+        print(f"[{sheet_num}]", sheet.title)
+    select_list = int(input("Select list: ")) - 1
+    selected_list = SHEET.get_worksheet(select_list)
+    view_data = selected_list.get_all_values()
+    print(view_data)
+
 def list_menu():
     """
     Provide user a menu option to add more items to the list or exit the app.
@@ -44,6 +42,18 @@ def list_menu():
     print("[2] Exit")
     list_option = int(input("Enter option: "))
     return list_option
+
+
+def create_new_list():
+    """
+    Add a worksheet for a new grocery list and name it based on user input.
+    Add headings to the worksheet.
+    """
+    new_list = input("Please enter a name for the list: ")
+    new_worksheet = SHEET.add_worksheet(title = new_list, rows="100", cols="20")
+    heading = ["Items", "Quantity", "Measurement"]
+    new_worksheet.append_row(heading)
+    return new_list
 
 
 def get_list():
@@ -75,6 +85,7 @@ def get_list():
     print("Your list have been updated.\n")
 
 
+
 def main():
     """
     Run all program functions.
@@ -84,7 +95,7 @@ def main():
         if option == 1:
             get_list()
         elif option == 2:
-           pass
+           view_lists()
         else:
             print("Invalid option\n")
         
@@ -96,5 +107,4 @@ def main():
 print("Welcome to your Grocery list.\n")
 
 main()
-
 
