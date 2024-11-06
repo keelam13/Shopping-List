@@ -24,19 +24,27 @@ def main_menu():
     return main_option
 
 
-def view_lists():
+def get_lists():
     """
-    Shows data from selected list.
+    Get all worksheets from the spreadsheet.
     """
     sheet_num = 0
     for sheet in SHEET:
         sheet_num += 1
         print(f"[{sheet_num}]", sheet.title)
+
+
+def view_lists():
+    """
+    Shows data from selected list.
+    """
+    get_lists()
     select_list = int(input("Select list: ")) - 1
     selected_list = SHEET.get_worksheet(select_list)
     view_data = selected_list.get_all_values()
     print()
     print(view_data)
+
 
 def list_menu():
     """
@@ -66,7 +74,6 @@ def get_list(grocery_list):
     Get grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
     """
-    # grocery_list = create_new_list()
     option = list_menu()
    
     while option != 2:
@@ -91,6 +98,11 @@ def get_list(grocery_list):
 
 
 
+def delete_list():
+    """
+    Select and delete existing list
+    """
+    
 def main():
     """
     Run all program functions.
