@@ -19,6 +19,7 @@ def main_menu():
     print("[0] Exit")
     print("[1] Add new list")
     print("[2] View lists")
+    print("[3] Delete list")
     main_option = int(input("Enter option: "))
     print()
     return main_option
@@ -26,29 +27,40 @@ def main_menu():
 
 def get_lists():
     """
-    Get all worksheets from the spreadsheet.
+    Gets all worksheets from the spreadsheet.
     """
     sheet_num = 0
     for sheet in SHEET:
         sheet_num += 1
         print(f"[{sheet_num}]", sheet.title)
-
+    select_list = int(input("Select a list: ")) - 1
+    get_list = SHEET.get_worksheet(select_list)
+    return get_list
 
 def view_lists():
     """
-    Shows data from selected list.
+    Shows data of selected list.
     """
-    get_lists()
-    select_list = int(input("Select list: ")) - 1
-    selected_list = SHEET.get_worksheet(select_list)
+    selected_list = get_lists()
     view_data = selected_list.get_all_values()
     print()
     print(view_data)
 
 
+def delete_list():
+    """
+    Deletes a selected list
+    """
+    selected_list = get_lists()
+    SHEET.del_worksheet(selected_list)
+    print("Deleting list...\n")
+    print("List successfully deleted.\n")
+
+    
+
 def list_menu():
     """
-    Provide user a menu option to add more items to the list or exit the app.
+    Provides user a menu option to add more items to the list or exit the app.
     """
     print("[1] Add+")
     print("[2] Exit")
@@ -59,8 +71,8 @@ def list_menu():
 
 def create_new_list():
     """
-    Add a worksheet for a new grocery list and name it based on user input.
-    Add headings to the worksheet.
+    Adds a worksheet for a new grocery list and name it based on user input.
+    Adds headings to the worksheet.
     """
     new_list = input("Please enter a name for the list: ")
     new_worksheet = SHEET.add_worksheet(title = new_list, rows="100", cols="20")
@@ -71,7 +83,7 @@ def create_new_list():
 
 def get_list(grocery_list):
     """
-    Get grocery items, quantity and measurement from user input and add to list.
+    Gets grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
     """
     option = list_menu()
@@ -96,13 +108,7 @@ def get_list(grocery_list):
 
     print("Your list have been updated.\n")
 
-
-
-def delete_list():
-    """
-    Select and delete existing list
-    """
-    
+  
 def main():
     """
     Run all program functions.
@@ -113,7 +119,9 @@ def main():
             grocery_list = create_new_list()
             get_list(grocery_list)
         elif option == 2:
-           view_lists()
+            view_lists()
+        elif option == 3:
+            delete_list()
         else:
             print("Invalid option\n")
         
@@ -125,4 +133,3 @@ def main():
 print("Welcome to your Grocery list.\n")
 
 main()
-
