@@ -20,18 +20,22 @@ def main_menu():
     print("[1] Add new list")
     print("[2] View lists")
     main_option = int(input("Enter option: "))
+    print()
     return main_option
 
 
 def view_lists():
-    worksheet_list = SHEET
+    """
+    Shows data from selected list.
+    """
     sheet_num = 0
-    for sheet in worksheet_list:
+    for sheet in SHEET:
         sheet_num += 1
         print(f"[{sheet_num}]", sheet.title)
     select_list = int(input("Select list: ")) - 1
     selected_list = SHEET.get_worksheet(select_list)
     view_data = selected_list.get_all_values()
+    print()
     print(view_data)
 
 def list_menu():
@@ -41,6 +45,7 @@ def list_menu():
     print("[1] Add+")
     print("[2] Exit")
     list_option = int(input("Enter option: "))
+    print()
     return list_option
 
 
