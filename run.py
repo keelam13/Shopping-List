@@ -21,5 +21,26 @@ def create_new_list():
     """
     new_list = input("Please enter a name for the list: ")
     SHEET.add_worksheet(title = new_list, rows="100", cols="20")
+    return new_list
 
-create_new_list()
+grocery_list = create_new_list()
+
+def get_list():
+    """
+    Get gocery items, quantity and measurement from user input and add to list.
+    """
+    grocery_item = []
+    item = str(input("Enter item name: "))
+    grocery_item.append(item)
+    quantity = int(input("Enter quantity: "))
+    grocery_item.append(quantity)
+    unit_of_measurement = str(input("Enter unit of measurement"))
+    grocery_item.append(unit_of_measurement)
+    print("Updating your grocery list...")
+    update_list = SHEET.worksheet(grocery_list)
+    update_list.append_row(grocery_item)
+    print("Grocery list updated")
+
+get_list()
+
+
