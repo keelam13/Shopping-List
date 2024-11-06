@@ -18,9 +18,12 @@ print("Welcome to your Grocery list.")
 def create_new_list():
     """
     Add a worksheet for a new grocery list and name it based on user input.
+    Add headings to the worksheet.
     """
     new_list = input("Please enter a name for the list: ")
-    SHEET.add_worksheet(title = new_list, rows="100", cols="20")
+    new_worksheet = SHEET.add_worksheet(title = new_list, rows="100", cols="20")
+    heading = ["Items", "Quantity", "Measurement"]
+    new_worksheet.append_row(heading)
     return new_list
 
 grocery_list = create_new_list()
@@ -39,6 +42,7 @@ def list_menu():
 def get_list():
     """
     Get grocery items, quantity and measurement from user input and add to list.
+    Function will loop while user chooses to add more items otherwise exit the loop.
     """
     option = list_menu()
    
