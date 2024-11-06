@@ -12,9 +12,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('grocery_list')
 
-print("Welcome to your Grocery list.")
-
-
 def create_new_list():
     """
     Add a worksheet for a new grocery list and name it based on user input.
@@ -25,8 +22,6 @@ def create_new_list():
     heading = ["Items", "Quantity", "Measurement"]
     new_worksheet.append_row(heading)
     return new_list
-
-grocery_list = create_new_list()
 
 
 def list_menu():
@@ -44,6 +39,7 @@ def get_list():
     Get grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
     """
+    grocery_list = create_new_list()
     option = list_menu()
    
     while option != 2:
@@ -66,6 +62,15 @@ def get_list():
 
     print("Your list have been updated.")
 
-get_list()
+
+def main():
+    """
+    Run all program functions.
+    """
+    get_list()
+
+
+print("Welcome to your Grocery list.")
+main()
 
 
