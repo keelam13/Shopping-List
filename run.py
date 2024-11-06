@@ -25,21 +25,42 @@ def create_new_list():
 
 grocery_list = create_new_list()
 
+
+def list_menu():
+    """
+    Provide user a menu option to add more items to the list or exit the app.
+    """
+    print("[1] Add+")
+    print("[2] Exit")
+    option = int(input("Enter option: "))
+    return option
+
+
 def get_list():
     """
-    Get gocery items, quantity and measurement from user input and add to list.
+    Get grocery items, quantity and measurement from user input and add to list.
     """
-    grocery_item = []
-    item = str(input("Enter item name: "))
-    grocery_item.append(item)
-    quantity = int(input("Enter quantity: "))
-    grocery_item.append(quantity)
-    unit_of_measurement = str(input("Enter unit of measurement"))
-    grocery_item.append(unit_of_measurement)
-    print("Updating your grocery list...")
-    update_list = SHEET.worksheet(grocery_list)
-    update_list.append_row(grocery_item)
-    print("Grocery list updated")
+    option = list_menu()
+   
+    while option != 2:
+        if option == 1:
+            grocery_item = []
+            item = input("Enter item name: ")
+            grocery_item.append(item)
+            quantity = int(input("Enter quantity: "))
+            grocery_item.append(quantity)
+            unit_of_measurement = input("Enter unit of measurement: ")
+            grocery_item.append(unit_of_measurement)
+            print(f"Adding {item} to list...")
+            update_list = SHEET.worksheet(grocery_list)
+            update_list.append_row(grocery_item)
+            print(f"{item} added.\n")
+        else:
+            print("Invalid option.\n")
+        
+        option = list_menu()
+
+    print("Your list have been updated.")
 
 get_list()
 
