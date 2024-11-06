@@ -12,6 +12,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('grocery_list')
 
+
 def create_new_list():
     """
     Add a worksheet for a new grocery list and name it based on user input.
@@ -24,14 +25,25 @@ def create_new_list():
     return new_list
 
 
+def main_menu():
+    """
+    Provides user option to add new grocery list, view existing lists, or exit app.
+    """
+    print("[0] Exit")
+    print("[1] Add new list")
+    print("[2] View lists")
+    main_option = int(input("Enter option: "))
+    return main_option
+
+
 def list_menu():
     """
     Provide user a menu option to add more items to the list or exit the app.
     """
     print("[1] Add+")
     print("[2] Exit")
-    option = int(input("Enter option: "))
-    return option
+    list_option = int(input("Enter option: "))
+    return list_option
 
 
 def get_list():
@@ -60,17 +72,29 @@ def get_list():
         
         option = list_menu()
 
-    print("Your list have been updated.")
+    print("Your list have been updated.\n")
 
 
 def main():
     """
     Run all program functions.
     """
-    get_list()
+    option = main_menu()
+    while option != 0:
+        if option == 1:
+            get_list()
+        elif option == 2:
+           pass
+        else:
+            print("Invalid option\n")
+        
+        option = main_menu()
+
+    print("Until next time, good bye!" )
 
 
-print("Welcome to your Grocery list.")
+print("Welcome to your Grocery list.\n")
+
 main()
 
 
