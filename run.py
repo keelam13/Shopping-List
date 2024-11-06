@@ -61,12 +61,12 @@ def create_new_list():
     return new_list
 
 
-def get_list():
+def get_list(grocery_list):
     """
     Get grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
     """
-    grocery_list = create_new_list()
+    # grocery_list = create_new_list()
     option = list_menu()
    
     while option != 2:
@@ -98,7 +98,8 @@ def main():
     option = main_menu()
     while option != 0:
         if option == 1:
-            get_list()
+            grocery_list = create_new_list()
+            get_list(grocery_list)
         elif option == 2:
            view_lists()
         else:
