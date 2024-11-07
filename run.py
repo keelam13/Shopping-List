@@ -53,9 +53,16 @@ def delete_list():
     Deletes a selected list
     """
     selected_list = get_lists()
-    SHEET.del_worksheet(selected_list)
     print("Deleting list...\n")
-    print("List successfully deleted.\n")
+    print(f"Are you sure you want to delete {selected_list.title}?")
+    confirm = menu("No", "Yes")
+    while confirm != 0:
+        if confirm == 1:
+            SHEET.del_worksheet(selected_list)
+            print("List successfully deleted.\n")
+        else:
+            print("Invalid option")
+        break
 
 
 def create_new_list():
