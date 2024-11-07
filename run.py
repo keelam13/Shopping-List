@@ -84,12 +84,12 @@ def get_items(grocery_list):
     Gets grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
     """
-    option = menu("Exit", "Add+")
+    option = menu("Please enter option number: ", "Exit", "Add+")
    
     while option != 0:
         if option == 1:
             grocery_item = []
-            item = input("Enter item name: ")
+            item = validate_item_input("Enter item name: ")
             grocery_item.append(item)
             quantity = int(input("Enter quantity: "))
             grocery_item.append(quantity)
@@ -102,7 +102,7 @@ def get_items(grocery_list):
         else:
             print("Invalid option.\n")
         
-        option = menu("Exit", "Add+")
+        option = menu("Please enter option number: ", "Exit", "Add+")
 
     print("Your list have been updated.\n")
 
@@ -120,17 +120,17 @@ def validate_integer_input(options, message):
                 if select_num <= options and select_num >= 0:
                     return select_num
                 else:
-                    print(f"Invalid input. Please enter a number from the options.")
+                    print("Invalid input. Please enter a number from the options.")
             except ValueError:
-                print(f"Invalid input. Please enter a number from options.")
+                print("Invalid input. Please enter a number from options.")
         except ValueError:
-            print(f"Invalid input. Please enter a number from options.")
+            print("Invalid input. Please enter a number from options.")
 
 
-def validate_item_input():
+def validate_item_input(message):
     while True:
         try:
-            item_input = input("Please enter an item: ")
+            item_input = input(message)
             if len(item_input) >= 3:
                 return item_input
             else:
@@ -152,11 +152,11 @@ def main():
         elif option == 3:
             delete_list()
         else:
-            print("Invalid option\n")
+            print("Invalid input. Please enter a number from options.")
         
         option = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
 
-    print("Until next time, good bye!" )
+    print("Until next time, good bye!")
 
 
 print("Welcome to your Grocery list.\n")
