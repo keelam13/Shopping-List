@@ -126,6 +126,16 @@ def validate_integer_input(options):
             print(f"Invalid input. Please enter your choice from 1 to {options}.")
 
 
+def validate_item_input():
+    while True:
+        try:
+            item_input = input("Please enter an item: ")
+            if len(item_input) >= 3:
+                return item_input
+            else:
+                print("Invalid input. Please enter atleast 3 letter word.")
+        except ValueError:
+            print("Invalid input. Please enter your choice from 1 to 4.")
 
 def main():
     """
