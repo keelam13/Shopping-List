@@ -33,9 +33,8 @@ def get_lists():
     for sheet in SHEET:
         sheet_num += 1
         print(f"[{sheet_num}]", sheet.title)
-    select_list = int(input("Select a list: ")) - 1
-    if validate_data(select_list):
-        print("Data is valid.")
+    num_of_options = len(SHEET.worksheets())
+    select_list = validate_integer_input(num_of_options) - 1
     get_list = SHEET.get_worksheet(select_list)
     return get_list
 
@@ -107,24 +106,31 @@ def get_items(grocery_list):
     print("Your list have been updated.\n")
 
 
-def validate_data(values):
+def validate_integer_input(options):
     """
-    
+    Gets input from user and validates if it is an integer.
+    Raises ValueError if input is other than an integer,
+    or if it exceeds the number of options given. 
     """
-    try:
-        if values is not int:
-            raise ValueError("That is not valid.")
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
+    while True:
+        try:
+            select_num = int(input("Select a list: "))
+            try:
+                if select_num <= options and select_num >= 0:
+                    return select_num
+                else:
+                    print(f"Invalid input. Please enter a number between 1 and {options}.")
+            except ValueError:
+                print(f"Invalid input. Please enter choice between 1 and {options}.")
+        except ValueError:
+            print(f"Invalid input. Please enter your choice from 1 to {options}.")
 
-    return True 
 
-"""
+
 def main():
-    ""
+    """
     Run all program functions.
-    ""
+    """
     option = menu("Exit", "Add new list", "View lists", "Delete list")
     while option != 0:
         if option == 1:
@@ -145,5 +151,3 @@ def main():
 print("Welcome to your Grocery list.\n")
 
 main()
-"""
-get_lists()
