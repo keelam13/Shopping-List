@@ -12,7 +12,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('grocery_list')
 
-def menu(*arg):
+def menu(message, *arg):
     """
     Provides user a menu option for navigation.
     """
@@ -20,7 +20,8 @@ def menu(*arg):
     for i in arg:
         option_num += 1
         print(f"[{option_num}] {i}")
-    list_option = int(input("Enter option: "))
+    num_of_options = len(arg)
+    list_option = validate_integer_input(num_of_options, message)
     print()
     return list_option
 
@@ -34,7 +35,7 @@ def get_lists():
         sheet_num += 1
         print(f"[{sheet_num}]", sheet.title)
     num_of_options = len(SHEET.worksheets())
-    select_list = validate_integer_input(num_of_options) - 1
+    select_list = validate_integer_input(num_of_options, "Please enter a list number: ") - 1
     get_list = SHEET.get_worksheet(select_list)
     return get_list
 
@@ -56,7 +57,7 @@ def delete_list():
     selected_list = get_lists()
     print("Deleting list...\n")
     print(f"Are you sure you want to delete {selected_list.title}?")
-    confirm = menu("No", "Yes")
+    confirm = menu("Please enter option number: ", "No", "Yes")
     while confirm != 0:
         if confirm == 1:
             SHEET.del_worksheet(selected_list)
@@ -106,7 +107,7 @@ def get_items(grocery_list):
     print("Your list have been updated.\n")
 
 
-def validate_integer_input(options):
+def validate_integer_input(options, message):
     """
     Gets input from user and validates if it is an integer.
     Raises ValueError if input is other than an integer,
@@ -114,16 +115,16 @@ def validate_integer_input(options):
     """
     while True:
         try:
-            select_num = int(input("Select a list: "))
+            select_num = int(input(f"{message}"))
             try:
                 if select_num <= options and select_num >= 0:
                     return select_num
                 else:
-                    print(f"Invalid input. Please enter a number between 1 and {options}.")
+                    print(f"Invalid input. Please enter a number from the options.")
             except ValueError:
-                print(f"Invalid input. Please enter choice between 1 and {options}.")
+                print(f"Invalid input. Please enter a number from options.")
         except ValueError:
-            print(f"Invalid input. Please enter your choice from 1 to {options}.")
+            print(f"Invalid input. Please enter a number from options.")
 
 
 def validate_item_input():
@@ -141,7 +142,7 @@ def main():
     """
     Run all program functions.
     """
-    option = menu("Exit", "Add new list", "View lists", "Delete list")
+    option = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
     while option != 0:
         if option == 1:
             grocery_list = create_new_list()
@@ -153,7 +154,7 @@ def main():
         else:
             print("Invalid option\n")
         
-        option = menu("Exit", "Add new list", "View lists", "Delete list")
+        option = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
 
     print("Until next time, good bye!" )
 
