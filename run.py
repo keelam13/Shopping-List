@@ -34,6 +34,8 @@ def get_lists():
         sheet_num += 1
         print(f"[{sheet_num}]", sheet.title)
     select_list = int(input("Select a list: ")) - 1
+    if validate_data(select_list):
+        print("Data is valid.")
     get_list = SHEET.get_worksheet(select_list)
     return get_list
 
@@ -105,10 +107,24 @@ def get_items(grocery_list):
     print("Your list have been updated.\n")
 
 
+def validate_data(values):
+    """
+    
+    """
+    try:
+        if values is not int:
+            raise ValueError("That is not valid.")
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True 
+
+"""
 def main():
-    """
+    ""
     Run all program functions.
-    """
+    ""
     option = menu("Exit", "Add new list", "View lists", "Delete list")
     while option != 0:
         if option == 1:
@@ -129,3 +145,5 @@ def main():
 print("Welcome to your Grocery list.\n")
 
 main()
+"""
+get_lists()
