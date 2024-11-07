@@ -12,17 +12,17 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('grocery_list')
 
-def main_menu():
+def menu(*arg):
     """
-    Provides user option to add new grocery list, view existing lists, or exit app.
+    Provides user a menu option for navigation.
     """
-    print("[0] Exit")
-    print("[1] Add new list")
-    print("[2] View lists")
-    print("[3] Delete list")
-    main_option = int(input("Enter option: "))
+    option_num = -1
+    for i in arg:
+        option_num += 1
+        print(f"[{option_num}] {i}")
+    list_option = int(input("Enter option: "))
     print()
-    return main_option
+    return list_option
 
 
 def get_lists():
@@ -36,6 +36,7 @@ def get_lists():
     select_list = int(input("Select a list: ")) - 1
     get_list = SHEET.get_worksheet(select_list)
     return get_list
+
 
 def view_lists():
     """
@@ -56,18 +57,6 @@ def delete_list():
     print("Deleting list...\n")
     print("List successfully deleted.\n")
 
-    
-
-def list_menu():
-    """
-    Provides user a menu option to add more items to the list or exit the app.
-    """
-    print("[1] Add+")
-    print("[2] Exit")
-    list_option = int(input("Enter option: "))
-    print()
-    return list_option
-
 
 def create_new_list():
     """
@@ -86,9 +75,9 @@ def get_items(grocery_list):
     Gets grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
     """
-    option = list_menu()
+    option = menu("Exit", "Add+")
    
-    while option != 2:
+    while option != 0:
         if option == 1:
             grocery_item = []
             item = input("Enter item name: ")
@@ -104,16 +93,16 @@ def get_items(grocery_list):
         else:
             print("Invalid option.\n")
         
-        option = list_menu()
+        option = menu("Exit", "Add+")
 
     print("Your list have been updated.\n")
 
-  
+
 def main():
     """
     Run all program functions.
     """
-    option = main_menu()
+    option = menu("Exit", "Add new list", "View lists", "Delete list")
     while option != 0:
         if option == 1:
             grocery_list = create_new_list()
@@ -125,7 +114,7 @@ def main():
         else:
             print("Invalid option\n")
         
-        option = main_menu()
+        option = menu("Exit", "Add new list", "View lists", "Delete list")
 
     print("Until next time, good bye!" )
 
