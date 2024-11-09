@@ -72,7 +72,7 @@ def create_new_list():
     Adds a worksheet for a new grocery list and name it based on user input.
     Adds headings to the worksheet.
     """
-    new_list = input("Please enter a name for the list: ")
+    new_list = validate_string_input("Please enter a name for the list: ")
     new_worksheet = SHEET.add_worksheet(title = new_list, rows="100", cols="20")
     heading = ["Items", "Quantity", "Measurement"]
     new_worksheet.append_row(heading)
@@ -89,7 +89,7 @@ def get_items(grocery_list):
     while option != 0:
         if option == 1:
             grocery_item = []
-            item = validate_item_input("Enter item name: ")
+            item = validate_string_input("Enter item name: ")
             grocery_item.append(item)
             quantity = int(input("Enter quantity: "))
             grocery_item.append(quantity)
@@ -100,7 +100,7 @@ def get_items(grocery_list):
             update_list.append_row(grocery_item)
             print(f"{item} added.\n")
         else:
-            print("Invalid option.\n")
+            print("Invalid input. Please enter a number from options.")
         
         option = menu("Please enter option number: ", "Exit", "Add+")
 
@@ -127,16 +127,24 @@ def validate_integer_input(options, message):
             print("Invalid input. Please enter a number from options.")
 
 
-def validate_item_input(message):
+def validate_string_input(message):
+    """
+    Gets input from user and removes spaces,
+    Prints 'Invalid input' if it doesn't contain atleast 3 characters.
+    """
     while True:
         try:
-            item_input = input(message)
+            item_input = input(message).strip()
             if len(item_input) >= 3:
                 return item_input
             else:
-                print("Invalid input. Please enter atleast 3 letter word.")
-        except ValueError:
-            print("Invalid input. Please enter your choice from 1 to 4.")
+                print("Invalid input.")
+                print("Please enter atleast 3 characters.")
+                print("Ex. abc, 123, A$ 1, b 2*\n")
+        except:
+            print("Invalid input.")
+            print("Please enter atleast 3 characters.")
+            print("Ex. abc, 123, A$ 1, b 2*\n")
 
 def main():
     """
