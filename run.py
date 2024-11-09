@@ -21,7 +21,7 @@ def menu(message, *arg):
         option_num += 1
         print(f"[{option_num}] {i}")
     num_of_options = len(arg)
-    list_option = validate_integer_input(num_of_options, message)
+    list_option = validate_data_input(menu, message, num_of_options)
     print()
     return list_option
 
@@ -35,7 +35,7 @@ def get_lists():
         sheet_num += 1
         print(f"[{sheet_num}]", sheet.title)
     num_of_options = len(SHEET.worksheets())
-    select_list = validate_integer_input(num_of_options, "Please enter a list number: ") - 1
+    select_list = validate_data_input(menu,  "Please enter a list number: ", num_of_options) - 1
     get_list = SHEET.get_worksheet(select_list)
     return get_list
 
@@ -72,79 +72,45 @@ def create_new_list():
     Adds a worksheet for a new grocery list and name it based on user input.
     Adds headings to the worksheet.
     """
-    new_list = validate_string_input("Please enter a name for the list: ")
+    new_list = validate_data_input("list", "Please enter a name for the list: ")
     new_worksheet = SHEET.add_worksheet(title = new_list, rows="100", cols="20")
     heading = ["Items", "Quantity", "Measurement"]
     new_worksheet.append_row(heading)
     return new_list
 
 
-def get_items(grocery_list):
-    """
-    Gets grocery items, quantity and measurement from user input and add to list.
-    Function will loop while user chooses to add more items otherwise exit the loop.
-    """
-    option = menu("Please enter option number: ", "Exit", "Add+")
-   
-    while option != 0:
-        if option == 1:
-            grocery_item = []
-            item = validate_string_input("Enter item name: ")
-            grocery_item.append(item)
-            quantity = int(input("Enter quantity: "))
-            grocery_item.append(quantity)
-            unit_of_measurement = input("Enter unit of measurement: ")
-            grocery_item.append(unit_of_measurement)
-            print(f"Adding {item} to list...")
-            update_list = SHEET.worksheet(grocery_list)
-            update_list.append_row(grocery_item)
-            print(f"{item} added.\n")
-        else:
-            print("Invalid input. Please enter a number from options.")
-        
-        option = menu("Please enter option number: ", "Exit", "Add+")
+def validate_data_input(*args):
 
-    print("Your list have been updated.\n")
-
-
-def validate_integer_input(options, message):
-    """
-    Gets input from user and validates if it is an integer.
-    Raises ValueError if input is other than an integer,
-    or if it exceeds the number of options given. 
-    """
     while True:
-        try:
-            select_num = int(input(f"{message}"))
+        if len(args) == 2:
+            if args[0] == "qty":
+                try:
+                    data_input = float(input(args[1]))
+                    return data_input
+                except ValueError:
+                    print("Invalid input. Please enter numbers only.")
+            else:
+                try:
+                    item_input = input(args[1]).strip()
+                    if len(item_input) >= 3:
+                        return item_input
+                    else:
+                        print("Invalid input.")
+                        print("Please enter atleast 3 characters.")
+                        print("Ex. abc, 123, A$ 1, b 2*\n")
+                except:
+                    print("Invalid input.")
+                    print("Please enter atleast 3 characters.")
+                    print("Ex. abc, 123, A$ 1, b 2*\n")
+        else:    
             try:
-                if select_num <= options and select_num >= 0:
+                select_num = int(input(args[1]))
+                if select_num <= args[2] and select_num >= 0:
                     return select_num
                 else:
                     print("Invalid input. Please enter a number from the options.")
             except ValueError:
                 print("Invalid input. Please enter a number from options.")
-        except ValueError:
-            print("Invalid input. Please enter a number from options.")
-
-
-def validate_string_input(message):
-    """
-    Gets input from user and removes spaces,
-    Prints 'Invalid input' if it doesn't contain atleast 3 characters.
-    """
-    while True:
-        try:
-            item_input = input(message).strip()
-            if len(item_input) >= 3:
-                return item_input
-            else:
-                print("Invalid input.")
-                print("Please enter atleast 3 characters.")
-                print("Ex. abc, 123, A$ 1, b 2*\n")
-        except:
-            print("Invalid input.")
-            print("Please enter atleast 3 characters.")
-            print("Ex. abc, 123, A$ 1, b 2*\n")
 
 def main():
     """
