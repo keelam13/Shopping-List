@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from tabulate import tabulate
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -70,12 +71,13 @@ def get_items(grocery_list):
 
 def view_lists():
     """
-    Shows data of selected list.
+    Shows data of selected list in a table.
     """
     selected_list = get_lists()
     view_data = selected_list.get_all_values()
     print()
-    print(view_data)
+    print(f"Viewing {selected_list.title} list")
+    print(tabulate(view_data),"\n")
 
 
 def delete_list():
@@ -137,6 +139,7 @@ def validate_data_input(*args):
                     print("Invalid input. Please enter a number from the options.")
             except ValueError:
                 print("Invalid input. Please enter a number from options.")
+
 
 def main():
     """
