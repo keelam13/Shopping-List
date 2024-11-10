@@ -41,6 +41,15 @@ def get_lists():
     return get_list
 
 
+def get_list_item(grocery_list):
+    """
+    Locates the item enetered by user from the list.
+    """
+    entered = validate_data_input("item", "Enter item name: ")
+    item = grocery_list.find(entered)
+    return item
+
+
 def get_item_input(grocery_list):
     """
     Gets grocery items, quantity and measurement from user input and add to list.
@@ -82,19 +91,19 @@ def delete_data(data, grocery_list):
             if confirm == 1:
                 print(f"Deleting {data}...\n")
                 SHEET.del_worksheet(grocery_list)
-                print(f"{data} successfully deleted.\n")
+                print(f"{data.capitalize()} successfully deleted.\n")
             else:
                 print("Invalid option")
             break
     elif data == "item":
-        cell = get_list_items(grocery_list)
+        cell = get_list_item(grocery_list)
         print(f"Are you sure you want to delete {cell.value}?")
         confirm = menu("Please enter option number: ", "No", "Yes")
         while confirm != 0:
             if confirm == 1:
                 print(f"Deleting {data}...\n")
                 grocery_list.delete_rows(cell.row)
-                print(f"{data} successfully deleted.\n")
+                print(f"{data.capitalize()} successfully deleted.\n")
             else:
                 print("Invalid option")
             break
