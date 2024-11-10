@@ -161,11 +161,9 @@ def main():
                     print("Option 2 has been called")
                 elif to_do == 3:
                     print("Option 3 has been called")
-                elif to_do == 3:
-                    print("Option 4 has been called")
                 else:
                     print("Invalid input. Please enter a number from options.")
-
+                to_do = menu("Please enter option number: ", "Exit", "Add+", "Edit an item", "Delete an item")
         elif option == 3:
             delete_list()
         else:
