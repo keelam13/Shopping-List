@@ -27,7 +27,7 @@ def menu(message, *arg):
     return list_option
 
 
-def get_items(grocery_list):
+def get_item_input(grocery_list):
     """
     Gets grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
@@ -142,7 +142,7 @@ def main():
             new_grocery_list = create_new_list()
             ticked = menu("Please enter option number: ", "Exit", "Add items")
             while ticked != 0:
-                get_items(new_grocery_list)
+                get_item_input(new_grocery_list)
                 ticked = menu("Please enter option number: ", "Exit", "Add+")
             print("Your list have been updated.\n")
         elif option == 2:
@@ -150,7 +150,7 @@ def main():
             to_do = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
             while to_do != 0:
                 if to_do == 1:
-                    get_items(selected_list.title)  
+                    get_item_input(selected_list.title)  
                 elif to_do == 2:
                     print("Option 2 has been called")
                 elif to_do == 3:
