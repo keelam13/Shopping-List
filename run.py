@@ -27,20 +27,6 @@ def menu(message, *arg):
     return list_option
 
 
-def get_lists():
-    """
-    Gets all worksheets from the spreadsheet.
-    """
-    sheet_num = 0
-    for sheet in SHEET:
-        sheet_num += 1
-        print(f"[{sheet_num}]", sheet.title)
-    num_of_options = len(SHEET.worksheets())
-    select_list = validate_data_input(menu,  "Please enter a list number: ", num_of_options) - 1
-    get_list = SHEET.get_worksheet(select_list)
-    return get_list
-
-
 def get_items(grocery_list):
     """
     Gets grocery items, quantity and measurement from user input and add to list.
@@ -57,8 +43,7 @@ def get_items(grocery_list):
     update_list = SHEET.worksheet(grocery_list)
     update_list.append_row(grocery_item)
     print(f"{item} added.\n")
-
-
+    
 
 def view_lists():
     """
@@ -72,21 +57,35 @@ def view_lists():
     return selected_list
 
 
-def delete_list():
+def delete_data(data, grocery_list):
     """
-    Deletes a selected list
+    Deletes a selected data and asks user to confirmdeletion.
     """
-    selected_list = get_lists()
-    print("Deleting list...\n")
-    print(f"Are you sure you want to delete {selected_list.title}?")
-    confirm = menu("Please enter option number: ", "No", "Yes")
-    while confirm != 0:
-        if confirm == 1:
-            SHEET.del_worksheet(selected_list)
-            print("List successfully deleted.\n")
-        else:
-            print("Invalid option")
-        break
+    if data == "list":
+        print(f"Are you sure you want to delete {grocery_list.title}?")
+        confirm = menu("Please enter option number: ", "No", "Yes")
+        while confirm != 0:
+            if confirm == 1:
+                print(f"Deleting {data}...\n")
+                SHEET.del_worksheet(grocery_list)
+                print(f"{data} successfully deleted.\n")
+            else:
+                print("Invalid option")
+            break
+    elif data == "item":
+        cell = get_item_delete(grocery_list)
+        print(f"Are you sure you want to delete {cell.value}?")
+        confirm = menu("Please enter option number: ", "No", "Yes")
+        while confirm != 0:
+            if confirm == 1:
+                print(f"Deleting {data}...\n")
+                grocery_list.delete_rows(cell.row)
+                print(f"{data} successfully deleted.\n")
+            else:
+                print("Invalid option")
+            break
+    else:
+        print("Invalid option")
 
 
 def create_new_list():
