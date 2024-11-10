@@ -46,25 +46,17 @@ def get_items(grocery_list):
     Gets grocery items, quantity and measurement from user input and add to list.
     Function will loop while user chooses to add more items otherwise exit the loop.
     """
-    option = menu("Please enter option number: ", "Exit", "Add items")
-   
-    while option != 0:
-        if option == 1:
-            grocery_item = []
-            item = validate_data_input("item", "Enter item name: ")
-            grocery_item.append(item)
-            quantity = validate_data_input("qty", "Enter quantity: ")
-            grocery_item.append(quantity)
-            unit_of_measurement = validate_data_input("unit", "Enter unit of measurement: ")
-            grocery_item.append(unit_of_measurement)
-            print(f"Adding {item} to list...")
-            update_list = SHEET.worksheet(grocery_list)
-            update_list.append_row(grocery_item)
-            print(f"{item} added.\n")
-        else:
-            print("Invalid input. Please enter a number from options.")
-        
-        option = menu("Please enter option number: ", "Exit", "Add+")
+    grocery_item = []
+    item = validate_data_input("item", "Enter item name: ")
+    grocery_item.append(item)
+    quantity = validate_data_input("qty", "Enter quantity: ")
+    grocery_item.append(quantity)
+    unit_of_measurement = validate_data_input("unit", "Enter unit of measurement: ")
+    grocery_item.append(unit_of_measurement)
+    print(f"Adding {item} to list...")
+    update_list = SHEET.worksheet(grocery_list)
+    update_list.append_row(grocery_item)
+    print(f"{item} added.\n")
 
     print("Your list have been updated.\n")
 
