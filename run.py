@@ -151,7 +151,7 @@ def main():
             to_do = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
             while to_do != 0:
                 if to_do == 1:
-                    print("Option 1 has been called")        
+                    get_items(selected_list.title)  
                 elif to_do == 2:
                     print("Option 2 has been called")
                 elif to_do == 3:
@@ -159,6 +159,7 @@ def main():
                 else:
                     print("Invalid input. Please enter a number from options.")
                 to_do = menu("Please enter option number: ", "Exit", "Add+", "Edit an item", "Delete an item")
+            print("Your list have been updated.\n") 
         elif option == 3:
             delete_list()
         else:
