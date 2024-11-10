@@ -58,7 +58,6 @@ def get_items(grocery_list):
     update_list.append_row(grocery_item)
     print(f"{item} added.\n")
 
-    print("Your list have been updated.\n")
 
 
 def view_lists():
@@ -142,7 +141,11 @@ def main():
     while option != 0:
         if option == 1:
             new_grocery_list = create_new_list()
-            get_items(new_grocery_list)
+            ticked = menu("Please enter option number: ", "Exit", "Add items")
+            while ticked != 0:
+                get_items(new_grocery_list)
+                ticked = menu("Please enter option number: ", "Exit", "Add+")
+            print("Your list have been updated.\n")
         elif option == 2:
             selected_list = view_lists()
             to_do = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
