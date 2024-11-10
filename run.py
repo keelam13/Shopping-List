@@ -168,13 +168,14 @@ def main():
                 elif to_do == 2:
                     print("Option 2 has been called")
                 elif to_do == 3:
-                    print("Option 3 has been called")
+                    delete_data("item", selected_list)
                 else:
                     print("Invalid input. Please enter a number from options.")
                 to_do = menu("Please enter option number: ", "Exit", "Add+", "Edit an item", "Delete an item")
             print("Your list have been updated.\n") 
         elif option == 3:
-            delete_list()
+            selected_list = view_lists()
+            delete_data("list", selected_list)
         else:
             print("Invalid input. Please enter a number from options.")
         
