@@ -27,6 +27,20 @@ def menu(message, *arg):
     return list_option
 
 
+def get_lists():
+    """
+    Gets all worksheets from the spreadsheet.
+    """
+    sheet_num = 0
+    for sheet in SHEET:
+        sheet_num += 1
+        print(f"[{sheet_num}]", sheet.title)
+    num_of_options = len(SHEET.worksheets())
+    select_list = validate_data_input(menu,  "Please enter a list number: ", num_of_options) - 1
+    get_list = SHEET.get_worksheet(select_list)
+    return get_list
+
+
 def get_item_input(grocery_list):
     """
     Gets grocery items, quantity and measurement from user input and add to list.
@@ -73,7 +87,7 @@ def delete_data(data, grocery_list):
                 print("Invalid option")
             break
     elif data == "item":
-        cell = get_item_delete(grocery_list)
+        cell = get_list_items(grocery_list)
         print(f"Are you sure you want to delete {cell.value}?")
         confirm = menu("Please enter option number: ", "No", "Yes")
         while confirm != 0:
