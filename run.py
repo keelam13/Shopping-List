@@ -86,29 +86,32 @@ def delete_data(data, grocery_list):
     """
     if data == "list":
         print(f"Are you sure you want to delete {grocery_list.title}?")
-        confirm = menu("Please enter option number: ", "No", "Yes")
-        while confirm != 0:
-            if confirm == 1:
+        confirm_lst = menu("Please enter option number: ", "No", "Yes")
+        while confirm_list != 0:
+            if confirm_list == 1:
                 print(f"Deleting {data}...\n")
                 SHEET.del_worksheet(grocery_list)
                 print(f"{data.capitalize()} successfully deleted.\n")
+                break
             else:
-                print("Invalid option")
-            confirm = menu("Please enter option number: ", "No", "Yes")
-    elif data == "item":
-        cell = get_list_item(grocery_list)
-        print(f"Are you sure you want to delete {cell.value}?")
-        confirm = menu("Please enter option number: ", "No", "Yes")
-        while confirm != 0:
-            if confirm == 1:
-                print(f"Deleting {data}...\n")
-                grocery_list.delete_rows(cell.row)
-                print(f"{data.capitalize()} successfully deleted.\n")
-            else:
-                print("Invalid option")
-            confirm = menu("Please enter option number: ", "No", "Yes")
+                print("Invalid option. Please enter a number from the options.")
+            confirm_list = menu("Please enter option number: ", "No", "Yes")
     else:
-        print("Invalid option")
+        try:
+            cell = get_list_item(grocery_list)
+            print(f"Are you sure you want to delete {cell.value}?")
+            confirm_item = menu("Please enter option number: ", "No", "Yes")
+            while confirm_item != 0:
+                if confirm_item == 1:
+                    print(f"Deleting {data}...\n")
+                    grocery_list.delete_rows(cell.row)
+                    print(f"{data.capitalize()} successfully deleted.\n")
+                    break
+                else:
+                    print("Invalid option")
+                confirm_item = menu("Please enter option number: ", "No", "Yes")
+        except AttributeError:
+            print("Sorry, item not found. Please try again.")
 
 
 def create_new_list():
