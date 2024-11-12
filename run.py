@@ -94,7 +94,7 @@ def delete_data(data, grocery_list):
                 print(f"{data.capitalize()} successfully deleted.\n")
             else:
                 print("Invalid option")
-            break
+            confirm = menu("Please enter option number: ", "No", "Yes")
     elif data == "item":
         cell = get_list_item(grocery_list)
         print(f"Are you sure you want to delete {cell.value}?")
@@ -106,7 +106,7 @@ def delete_data(data, grocery_list):
                 print(f"{data.capitalize()} successfully deleted.\n")
             else:
                 print("Invalid option")
-            break
+            confirm = menu("Please enter option number: ", "No", "Yes")
     else:
         print("Invalid option")
 
