@@ -152,7 +152,7 @@ def validate_data_input(*args):
                 else:
                     print("Invalid input. Please enter a number from the options.")
             except ValueError:
-                print("Invalid input. Please enter a number from options.")
+                print("Invalid input. Please enter a number from the options.")
 
 
 def main():
@@ -165,8 +165,11 @@ def main():
             new_grocery_list = create_new_list()
             ticked = menu("Please enter option number: ", "Exit", "Add items")
             while ticked != 0:
-                get_item_input(new_grocery_list)
-                ticked = menu("Please enter option number: ", "Exit", "Add+")
+                if ticked == 1:
+                    get_item_input(new_grocery_list)
+                else:
+                    print("Invalid option. Please enter a number from the options.")
+                ticked = menu("Please enter option number: ", "Exit", "Add items")
             print("Your list have been updated.\n")
         elif option == 2:
             selected_list = view_lists()
