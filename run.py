@@ -86,7 +86,7 @@ def delete_data(data, grocery_list):
     """
     if data == "list":
         print(f"Are you sure you want to delete {grocery_list.title}?")
-        confirm_lst = menu("Please enter option number: ", "No", "Yes")
+        confirm_list = menu("Please enter option number: ", "No", "Yes")
         while confirm_list != 0:
             if confirm_list == 1:
                 print(f"Deleting {data}...\n")
