@@ -46,7 +46,7 @@ def get_list_item(grocery_list):
     Locates the item enetered by user from the list.
     """
     entered = validate_data_input("item", "Enter item name: ")
-    item = grocery_list.find(entered)
+    item = grocery_list.find(entered, in_column = 1)
     return item
 
 
