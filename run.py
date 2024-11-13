@@ -128,7 +128,10 @@ def validate_data_input(*args):
                 try:
                     item_input = input(args[1]).strip()
                     if len(item_input) >= 3:
-                        return item_input
+                        if item_input in get_lists():
+                            print("List name already exists. Try another name.\n")
+                        else:
+                            return item_input
                     else:
                         print("Invalid input.")
                         print("Please enter atleast 3 characters.")
