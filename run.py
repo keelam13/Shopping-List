@@ -30,13 +30,10 @@ def get_lists():
     """
     Gets and prints all worksheets/lists from the spreadsheet.
     """
-    print("Your lists")
-    sheet_num = 0
+    lists = []
     for list_sheet in SHEET:
-        sheet_num += 1
-        print(f"[{sheet_num}]", list_sheet.title)
-    num_of_options = len(SHEET.worksheets())
-    return num_of_options
+        lists.append(list_sheet.title)
+    return lists
 
 
 def get_list_item(grocery_list, entered_item):
