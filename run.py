@@ -215,10 +215,11 @@ def main():
     print("Until next time, good bye!")
 
 
-print("Welcome to your Grocery list.\n")
-get_lists()
-print("What would you like to do?\n")
-main()
+if __name__ == "__main__":
+    print("Welcome to your Grocery list.\n")
+    get_lists()
+    print("What would you like to do?\n")
+    main()
 
 
 
