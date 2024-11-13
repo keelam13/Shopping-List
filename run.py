@@ -22,9 +22,9 @@ def menu(message, *arg):
         option_num += 1
         print(f"[{option_num}] {i}")
     num_of_options = len(arg)
-    list_option = validate_data_input(menu, message, num_of_options)
+    #list_option = validate_data_input(menu, message, num_of_options)
     print()
-    return list_option
+    return message, num_of_options
 
 
 def get_lists():
@@ -155,14 +155,15 @@ def validate_data_input(*args):
                 else:
                     print("Invalid input. Please enter a number from the options.")
             except ValueError:
-                print("Invalid input. Please enter a number from the options.")
+                print("Invalid input. Please enter a number from the options. ve")
 
 
 def main():
     """
     Run all program functions.
     """
-    option = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
+    start_menu = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
+    option = validate_data_input("menu", start_menu[0], start_menu[1])
     while option != 0:
         if option == 1:
             new_grocery_list = create_new_list()
