@@ -74,39 +74,21 @@ def view_list_data(list):
     return selected_list
 
 
-def delete_data(data, grocery_list):
+def delete_data(data, *args):
     """
-    Deletes a selected data and asks user to confirmdeletion.
+    Deletes a selected data from the spreadsheet.
     """
+    print(f"Deleting {data}...\n")
+    
     if data == "list":
-        print(f"Are you sure you want to delete {grocery_list.title}?")
-        confirm_list = menu("Please enter option number: ", "No", "Yes")
-        while confirm_list != 0:
-            if confirm_list == 1:
-                print(f"Deleting {data}...\n")
-                SHEET.del_worksheet(grocery_list)
-                print(f"{data.capitalize()} successfully deleted.\n")
-                break
-            else:
-                print("Invalid option. Please enter a number from the options.")
-            confirm_list = menu("Please enter option number: ", "No", "Yes")
+        SHEET.del_worksheet(args[0])         
     else:
-        try:
-            cell = get_list_item(grocery_list)
-            print(f"Are you sure you want to delete {cell.value}?")
-            confirm_item = menu("Please enter option number: ", "No", "Yes")
-            while confirm_item != 0:
-                if confirm_item == 1:
-                    print(f"Deleting {data}...\n")
-                    grocery_list.delete_rows(cell.row)
-                    print(f"{data.capitalize()} successfully deleted.\n")
-                    break
-                else:
-                    print("Invalid option")
-                confirm_item = menu("Please enter option number: ", "No", "Yes")
-        except AttributeError:
-            print("Sorry, item not found. Please try again.")
+        args[0].delete_rows(args[1].row)
+    
+    print(f"{data.capitalize()} successfully deleted.\n")
 
+              
+       
 
 def create_new_list(list_name):
     """
@@ -190,17 +172,41 @@ def main():
                 elif to_do == 2:
                     print("Option 2 has been called")
                 elif to_do == 3:
-                    entered = validate_data_input("item", "Enter item name: ")
-                    item_to_del = get_list_item(list_to_view, entered)
-                    delete_data("item", selected_list)
+                    try:
+                        item_input = validate_data_input("item", "Enter item to delete: ")
+                        item_to_del = get_list_item(list_to_view, item_input)
+                        print(f"Are you sure you want to delete {item_to_del.value}?")
+                        confirm_menu = menu("Please enter option number: ", "No", "Yes")
+                        confirmation = validate_data_input("menu", confirm_menu[0], confirm_menu[1])
+                        while confirmation != 0:
+                            if confirmation == 1:
+                                delete_data("item", list_to_view, item_to_del)                               
+                                break
+                            else:
+                                print("Invalid option. Please enter a number from the options.")
+                    except AttributeError:
+                        print("Sorry, item not found. Please try again.")
                 else:
                     print("Invalid input. Please enter a number from options.")
                 view_list_menu = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
                 to_do = validate_data_input("menu", view_list_menu[0], view_list_menu[1])
             print("Your list have been updated.\n") 
         elif option == 3:
-            selected_list = view_lists()
-            delete_data("list", selected_list)
+            your_lists = get_lists()
+            try:
+                list_input = validate_data_input("menu",  "Please enter a list number: ", your_lists) - 1
+                list_to_del =  SHEET.get_worksheet(list_input)
+                print(f"Are you sure you want to delete {list_to_del.title}?")
+                confirm_menu = menu("Please enter option number: ", "No", "Yes")
+                confirmation = validate_data_input("menu", confirm_menu[0], confirm_menu[1])
+                while confirmation != 0:
+                    if confirmation == 1:
+                        delete_data("list", list_to_del)
+                        break
+                    else:
+                        print("Invalid option. Please enter a number from the options.")
+            except AttributeError:
+                print("Sorry, item not found. Please try again.")
         else:
             print("Invalid input. Please enter a number from options.")
         
@@ -213,3 +219,6 @@ def main():
 print("Welcome to your Grocery list.\n")
 
 main()
+
+
+
