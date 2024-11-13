@@ -183,7 +183,10 @@ def main():
             to_do = validate_data_input("menu", view_list_menu[0], view_list_menu[1])
             while to_do != 0:
                 if to_do == 1:
-                    get_item_input(selected_list.title)  
+                    item = validate_data_input("item", "Enter item name: ")
+                    quantity = validate_data_input("qty", "Enter quantity: ")
+                    unit_of_measurement = validate_data_input("unit", "Enter unit of measurement: ")
+                    update_list(list_to_view.title, item, quantity, unit_of_measurement) 
                 elif to_do == 2:
                     print("Option 2 has been called")
                 elif to_do == 3:
