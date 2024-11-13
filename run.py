@@ -42,12 +42,12 @@ def get_lists():
     return num_of_options
 
 
-def get_list_item(grocery_list):
+def get_list_item(grocery_list, entered_item):
     """
     Locates the item enetered by user from the list.
     """
-    entered = validate_data_input("item", "Enter item name: ")
-    item = grocery_list.find(entered, in_column = 1)
+    # entered = validate_data_input("item", "Enter item name: ")
+    item = grocery_list.find(entered_item, in_column = 1)
     return item
 
 
@@ -190,6 +190,8 @@ def main():
                 elif to_do == 2:
                     print("Option 2 has been called")
                 elif to_do == 3:
+                    entered = validate_data_input("item", "Enter item name: ")
+                    item_to_del = get_list_item(list_to_view, entered)
                     delete_data("item", selected_list)
                 else:
                     print("Invalid input. Please enter a number from options.")
