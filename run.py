@@ -145,12 +145,14 @@ def main():
     """
     Run all program functions.
     """
+    print("Home Menu")
     start_menu = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
     option = validate_data_input("menu", start_menu[0], start_menu[1])
     while option != 0:
         if option == 1:
             new_grocery_list = validate_data_input("list", "Please enter a name for the list: ")
             create_new_list(new_grocery_list)
+            print("New List Menu")
             new_list_menu = menu("Please enter option number: ", "Exit", "Add items")
             ticked = validate_data_input("menu", new_list_menu[0], new_list_menu[1])
             while ticked != 0:
@@ -161,6 +163,7 @@ def main():
                     update_list(new_grocery_list, item, quantity, unit_of_measurement)
                 else:
                     print("Invalid option. Please enter a number from the options.")
+                print("New List Menu")
                 ticked = menu("Please enter option number: ", "Exit", "Add items")
                 ticked = validate_data_input("menu", new_list_menu[0], new_list_menu[1])
             print("Your list have been updated.\n")
@@ -168,6 +171,7 @@ def main():
             your_lists = get_lists()
             selected_list = validate_data_input("menu",  "Please enter a list number: ", your_lists) - 1
             list_to_view = view_list_data(selected_list)
+            print("List Menu")
             view_list_menu = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
             to_do = validate_data_input("menu", view_list_menu[0], view_list_menu[1])
             while to_do != 0:
@@ -188,6 +192,7 @@ def main():
                         print("Sorry, item not found. Please try again.")
                 else:
                     print("Invalid input. Please enter a number from options.")
+                print("List Menu")
                 view_list_menu = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
                 to_do = validate_data_input("menu", view_list_menu[0], view_list_menu[1])
             print("Your list have been updated.\n") 
@@ -203,6 +208,7 @@ def main():
         else:
             print("Invalid input. Please enter a number from options.")
         
+        print("Home Menu")
         start_menu = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
         option = validate_data_input("menu", start_menu[0], start_menu[1])
 
