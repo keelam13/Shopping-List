@@ -29,16 +29,17 @@ def menu(message, *arg):
 
 def get_lists():
     """
-    Gets all worksheets from the spreadsheet.
+    Gets and prints all worksheets/lists from the spreadsheet.
     """
+    print("Your lists")
     sheet_num = 0
-    for sheet in SHEET:
+    for list_sheet in SHEET:
         sheet_num += 1
-        print(f"[{sheet_num}]", sheet.title)
+        print(f"[{sheet_num}]", list_sheet.title)
     num_of_options = len(SHEET.worksheets())
-    select_list = validate_data_input(menu,  "Please enter a list number: ", num_of_options) - 1
-    get_list = SHEET.get_worksheet(select_list)
-    return get_list
+    # select_list = validate_data_input(menu,  "Please enter a list number: ", num_of_options) - 1
+    # lists = SHEET.get_worksheet(select_list)
+    return num_of_options
 
 
 def get_list_item(grocery_list):
@@ -60,11 +61,12 @@ def update_list(grocery_list, *args):
     print(f"{args[0]} added successfully.\n")
     
 
-def view_lists():
+def view_list_data(list):
     """
     Shows data of selected list in a table.
     """
-    selected_list = get_lists()
+    # selected_list = get_lists()
+    selected_list = SHEET.get_worksheet(list)
     view_data = selected_list.get_all_values()
     print()
     print(f"Viewing {selected_list.title} list")
@@ -174,8 +176,11 @@ def main():
                 ticked = validate_data_input("menu", new_list_menu[0], new_list_menu[1])
             print("Your list have been updated.\n")
         elif option == 2:
-            selected_list = view_lists()
-            to_do = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
+            your_lists = get_lists()
+            selected_list = validate_data_input("menu",  "Please enter a list number: ", your_lists) - 1
+            list_to_view = view_list_data(selected_list)
+            view_list_menu = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
+            to_do = validate_data_input("menu", view_list_menu[0], view_list_menu[1])
             while to_do != 0:
                 if to_do == 1:
                     get_item_input(selected_list.title)  
@@ -185,7 +190,8 @@ def main():
                     delete_data("item", selected_list)
                 else:
                     print("Invalid input. Please enter a number from options.")
-                to_do = menu("Please enter option number: ", "Exit", "Add+", "Edit an item", "Delete an item")
+                view_list_menu = menu("Please enter option number: ", "Exit", "Add new item", "Edit an item", "Delete an item")
+                to_do = validate_data_input("menu", view_list_menu[0], view_list_menu[1])
             print("Your list have been updated.\n") 
         elif option == 3:
             selected_list = view_lists()
@@ -193,7 +199,8 @@ def main():
         else:
             print("Invalid input. Please enter a number from options.")
         
-        option = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
+        start_menu = menu("Please enter option number: ", "Exit", "Add new list", "View lists", "Delete list")
+        option = validate_data_input("menu", start_menu[0], start_menu[1])
 
     print("Until next time, good bye!")
 
