@@ -114,16 +114,16 @@ def delete_data(data, grocery_list):
             print("Sorry, item not found. Please try again.")
 
 
-def create_new_list():
+def create_new_list(list_name):
     """
     Adds a worksheet for a new grocery list and name it based on user input.
     Adds headings to the worksheet.
     """
-    new_list = validate_data_input("list", "Please enter a name for the list: ")
-    new_worksheet = SHEET.add_worksheet(title = new_list, rows="100", cols="20")
+    # new_list = validate_data_input("list", "Please enter a name for the list: ")
+    new_worksheet = SHEET.add_worksheet(title = list_name, rows="100", cols="20")
     heading = ["Items", "Quantity", "Measurement"]
     new_worksheet.append_row(heading)
-    return new_list
+    # return new_list
 
 
 def validate_data_input(*args):
@@ -155,7 +155,7 @@ def validate_data_input(*args):
                 else:
                     print("Invalid input. Please enter a number from the options.")
             except ValueError:
-                print("Invalid input. Please enter a number from the options. ve")
+                print("Invalid input. Please enter a number from the options.")
 
 
 def main():
@@ -166,8 +166,10 @@ def main():
     option = validate_data_input("menu", start_menu[0], start_menu[1])
     while option != 0:
         if option == 1:
-            new_grocery_list = create_new_list()
-            ticked = menu("Please enter option number: ", "Exit", "Add items")
+            new_grocery_list = validate_data_input("list", "Please enter a name for the list: ")
+            create_new_list(new_grocery_list)
+            new_list_menu = menu("Please enter option number: ", "Exit", "Add items")
+            ticked = validate_data_input("menu", new_list_menu[0], new_list_menu[1])
             while ticked != 0:
                 if ticked == 1:
                     get_item_input(new_grocery_list)
