@@ -22,7 +22,6 @@ def menu(message, *arg):
         option_num += 1
         print(f"[{option_num}] {i}")
     num_of_options = len(arg)
-    #list_option = validate_data_input(menu, message, num_of_options)
     print()
     return message, num_of_options
 
@@ -37,8 +36,6 @@ def get_lists():
         sheet_num += 1
         print(f"[{sheet_num}]", list_sheet.title)
     num_of_options = len(SHEET.worksheets())
-    # select_list = validate_data_input(menu,  "Please enter a list number: ", num_of_options) - 1
-    # lists = SHEET.get_worksheet(select_list)
     return num_of_options
 
 
@@ -46,7 +43,6 @@ def get_list_item(grocery_list, entered_item):
     """
     Locates the item enetered by user from the list.
     """
-    # entered = validate_data_input("item", "Enter item name: ")
     item = grocery_list.find(entered_item, in_column = 1)
     return item
 
@@ -65,7 +61,6 @@ def view_list_data(list):
     """
     Shows data of selected list in a table.
     """
-    # selected_list = get_lists()
     selected_list = SHEET.get_worksheet(list)
     view_data = selected_list.get_all_values()
     print()
@@ -110,12 +105,9 @@ def create_new_list(list_name):
     Adds a worksheet for a new grocery list and name it based on user input.
     Adds headings to the worksheet.
     """
-    # new_list = validate_data_input("list", "Please enter a name for the list: ")
     new_worksheet = SHEET.add_worksheet(title = list_name, rows="100", cols="20")
     heading = ["Items", "Quantity", "Measurement"]
     new_worksheet.append_row(heading)
-    # return new_list
-
 
 def validate_data_input(*args):
 
