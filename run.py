@@ -87,7 +87,22 @@ def delete_data(data, *args):
     
     print(f"{data.capitalize()} successfully deleted.\n")
 
-              
+
+def confirm_delete(data, *args):
+    """
+    Asks user for confirmation before proceeding to delete data.
+    """
+    confirm_menu = menu("Please enter option number: ", "No", "Yes")
+    confirmation = validate_data_input("menu", confirm_menu[0], confirm_menu[1])
+    while confirmation != 0:
+        if confirmation == 1:
+            if data == "item":
+                delete_data("item", args[1], args[0])                               
+            else:
+                delete_data("list", args[0])
+        else:
+            print("Invalid option. Please enter a number from the options.")
+        break              
        
 
 def create_new_list(list_name):
@@ -176,14 +191,7 @@ def main():
                         item_input = validate_data_input("item", "Enter item to delete: ")
                         item_to_del = get_list_item(list_to_view, item_input)
                         print(f"Are you sure you want to delete {item_to_del.value}?")
-                        confirm_menu = menu("Please enter option number: ", "No", "Yes")
-                        confirmation = validate_data_input("menu", confirm_menu[0], confirm_menu[1])
-                        while confirmation != 0:
-                            if confirmation == 1:
-                                delete_data("item", list_to_view, item_to_del)                               
-                                break
-                            else:
-                                print("Invalid option. Please enter a number from the options.")
+                        confirm_delete("item", item_to_del, list_to_view)
                     except AttributeError:
                         print("Sorry, item not found. Please try again.")
                 else:
@@ -192,21 +200,14 @@ def main():
                 to_do = validate_data_input("menu", view_list_menu[0], view_list_menu[1])
             print("Your list have been updated.\n") 
         elif option == 3:
-            your_lists = get_lists()
             try:
-                list_input = validate_data_input("menu",  "Please enter a list number: ", your_lists) - 1
+                your_lists = get_lists()
+                list_input = validate_data_input("menu",  "Please enter the list number to be deleted: ", your_lists) - 1
                 list_to_del =  SHEET.get_worksheet(list_input)
                 print(f"Are you sure you want to delete {list_to_del.title}?")
-                confirm_menu = menu("Please enter option number: ", "No", "Yes")
-                confirmation = validate_data_input("menu", confirm_menu[0], confirm_menu[1])
-                while confirmation != 0:
-                    if confirmation == 1:
-                        delete_data("list", list_to_del)
-                        break
-                    else:
-                        print("Invalid option. Please enter a number from the options.")
+                confirm_delete("list", list_to_del)
             except AttributeError:
-                print("Sorry, item not found. Please try again.")
+                print("Sorry, list not found. Please try again.")
         else:
             print("Invalid input. Please enter a number from options.")
         
