@@ -54,16 +54,24 @@ def update_list(grocery_list, *args):
     print(f"{args[0]} added successfully.\n")
     
 
-def view_list_data(list):
+def view_list_data(list_data):
     """
     Shows data of selected list in a table.
     """
-    selected_list = SHEET.get_worksheet(list)
-    view_data = selected_list.get_all_values()
-    print()
-    print(f"Viewing {selected_list.title} list")
-    print(tabulate(view_data),"\n")
-    return selected_list
+    if list_data == "lists":
+        option_num = 0
+        print("Your lists.")
+        for i in get_lists():
+            option_num += 1
+            print(f"[{option_num}]", i)
+        
+    else:
+        selected_list = SHEET.get_worksheet(list_data)
+        view_data = selected_list.get_all_values()
+        print()
+        print(f"Viewing {selected_list.title} list")
+        print(tabulate(view_data),"\n")
+        return selected_list
 
 
 def delete_data(data, *args):
@@ -165,7 +173,8 @@ def main():
                 ticked = validate_data_input("menu", new_list_menu[0], new_list_menu[1])
             print("Your list have been updated.\n")
         elif option == 2:
-            your_lists = get_lists()
+            view_list_data("lists")
+            your_lists = len(get_lists())
             selected_list = validate_data_input("menu",  "Please enter a list number: ", your_lists) - 1
             list_to_view = view_list_data(selected_list)
             print("List Menu")
@@ -195,7 +204,7 @@ def main():
             print("Your list have been updated.\n") 
         elif option == 3:
             try:
-                your_lists = get_lists()
+                your_lists = len(get_lists())
                 list_input = validate_data_input("menu",  "Please enter the list number to be deleted: ", your_lists) - 1
                 list_to_del =  SHEET.get_worksheet(list_input)
                 print(f"Are you sure you want to delete {list_to_del.title}?")
@@ -214,9 +223,7 @@ def main():
 
 if __name__ == "__main__":
     print("Welcome to your Grocery list.\n")
-    get_lists()
+    view_list_data("lists")
     print("What would you like to do?\n")
     main()
-
-
 
