@@ -210,7 +210,8 @@ def main():
 
 
 print("Welcome to your Grocery list.\n")
-
+get_lists()
+print("What would you like to do?\n")
 main()
 
 
