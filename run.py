@@ -50,22 +50,14 @@ def get_list_item(grocery_list):
     return item
 
 
-def get_item_input(grocery_list):
+def update_list(grocery_list, *args):
     """
-    Gets grocery items, quantity and measurement from user input and add to list.
-    Function will loop while user chooses to add more items otherwise exit the loop.
+    Adds user input items to the a list.
     """
-    grocery_item = []
-    item = validate_data_input("item", "Enter item name: ")
-    grocery_item.append(item)
-    quantity = validate_data_input("qty", "Enter quantity: ")
-    grocery_item.append(quantity)
-    unit_of_measurement = validate_data_input("unit", "Enter unit of measurement: ")
-    grocery_item.append(unit_of_measurement)
-    print(f"Adding {item} to list...")
+    print(f"Adding {args[0]} to list...")
     update_list = SHEET.worksheet(grocery_list)
-    update_list.append_row(grocery_item)
-    print(f"{item} added.\n")
+    update_list.append_row(args)
+    print(f"{args[0]} added successfully.\n")
     
 
 def view_lists():
@@ -172,10 +164,14 @@ def main():
             ticked = validate_data_input("menu", new_list_menu[0], new_list_menu[1])
             while ticked != 0:
                 if ticked == 1:
-                    get_item_input(new_grocery_list)
+                    item = validate_data_input("item", "Enter item name: ")
+                    quantity = validate_data_input("qty", "Enter quantity: ")
+                    unit_of_measurement = validate_data_input("unit", "Enter unit of measurement: ")
+                    update_list(new_grocery_list, item, quantity, unit_of_measurement)
                 else:
                     print("Invalid option. Please enter a number from the options.")
                 ticked = menu("Please enter option number: ", "Exit", "Add items")
+                ticked = validate_data_input("menu", new_list_menu[0], new_list_menu[1])
             print("Your list have been updated.\n")
         elif option == 2:
             selected_list = view_lists()
