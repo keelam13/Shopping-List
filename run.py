@@ -15,7 +15,8 @@ SHEET = GSPREAD_CLIENT.open('grocery_list')
 
 def menu(message, *arg):
     """
-    Provides user a menu option for navigation.
+    Provides user a menu for navigation.
+    For loop iterates parameters to generate options.
     """
     option_num = -1
     for i in arg:
@@ -28,7 +29,8 @@ def menu(message, *arg):
 
 def get_lists():
     """
-    Gets and prints all worksheets/lists from the spreadsheet.
+    For loop ierates the worksheets/lists from the
+    spreadsheet and appends them to a list.
     """
     lists = []
     for list_sheet in SHEET:
@@ -37,17 +39,13 @@ def get_lists():
 
 
 def get_list_item(grocery_list, entered_item):
-    """
-    Locates the item enetered by user from the list.
-    """
+    """Locates the item enetered by user from the list."""
     item = grocery_list.find(entered_item, in_column = 1)
     return item
 
 
 def update_list(grocery_list, *args):
-    """
-    Adds user input items to the a list.
-    """
+    """Adds user data input to the a list."""
     print(f"Adding {args[0]} to list...")
     update_list = SHEET.worksheet(grocery_list)
     update_list.append_row(args)
@@ -55,29 +53,25 @@ def update_list(grocery_list, *args):
     
 
 def view_list_data(list_data):
-    """
-    Shows data of selected list in a table.
-    """
+    """Prints selected data to be viewed."""
     if list_data == "lists":
         option_num = 0
         print("Your lists.")
         for i in get_lists():
             option_num += 1
             print(f"[{option_num}]", i)
-        
     else:
         selected_list = SHEET.get_worksheet(list_data)
         view_data = selected_list.get_all_values()
         print()
         print(f"Viewing {selected_list.title} list")
+        # Prints data in a table
         print(tabulate(view_data),"\n")
         return selected_list
 
 
 def delete_data(data, *args):
-    """
-    Deletes a selected data from the spreadsheet.
-    """
+    """Deletes a selected data from the spreadsheet."""
     print(f"Deleting {data}...\n")
     
     if data == "list":
@@ -89,9 +83,7 @@ def delete_data(data, *args):
 
 
 def confirm_delete(data, *args):
-    """
-    Asks user for confirmation before proceeding to delete data.
-    """
+    """Asks user for confirmation before proceeding to delete data."""
     confirm_menu = menu("Please enter option number: ", "No", "Yes")
     confirmation = validate_data_input("menu", confirm_menu[0], confirm_menu[1])
     while confirmation != 0:
@@ -106,16 +98,17 @@ def confirm_delete(data, *args):
        
 
 def create_new_list(list_name):
-    """
-    Adds a worksheet for a new grocery list and name it based on user input.
-    Adds headings to the worksheet.
-    """
+    """Adds a worksheet for a new grocery list and name it based on user input."""
     new_worksheet = SHEET.add_worksheet(title = list_name, rows="100", cols="20")
     heading = ["Items", "Quantity", "Measurement"]
     new_worksheet.append_row(heading)
 
-def validate_data_input(*args):
 
+def validate_data_input(*args):
+    """
+    Validates data input before returning value.
+    Also checks if list name entered already exists.
+    """
     while True:
         if len(args) == 2:
             if args[0] == "qty":
@@ -128,6 +121,7 @@ def validate_data_input(*args):
                 try:
                     item_input = input(args[1]).strip()
                     if len(item_input) >= 3:
+                        # Checks redundancy of entered list name.
                         if args[0] == "new_list" and item_input in get_lists():
                             print("List name already exists. Try another name.\n")
                         else:
@@ -150,9 +144,7 @@ def validate_data_input(*args):
 
 
 def main():
-    """
-    Run all program functions.
-    """
+    """Run all program functions."""
     print("Home Menu")
     start_menu = menu("Please enter option number: ", "Exit main menu", "Add new list", "View lists", "Delete list")
     option = validate_data_input("menu", start_menu[0], start_menu[1])
