@@ -128,7 +128,7 @@ def validate_data_input(*args):
                 try:
                     item_input = input(args[1]).strip()
                     if len(item_input) >= 3:
-                        if item_input in get_lists():
+                        if args[0] == "new_list" and item_input in get_lists():
                             print("List name already exists. Try another name.\n")
                         else:
                             return item_input
@@ -158,7 +158,7 @@ def main():
     option = validate_data_input("menu", start_menu[0], start_menu[1])
     while option != 0:
         if option == 1:
-            new_grocery_list = validate_data_input("list", "Please enter a name for the list: ")
+            new_grocery_list = validate_data_input("new_list", "Please enter a name for the list: ")
             create_new_list(new_grocery_list)
             print("New List Menu")
             new_list_menu = menu("Please enter option number: ", "Exit new list menu", "Add items")
