@@ -55,14 +55,14 @@ def update_list(grocery_list, *args):
 def view_list_data(list_data):
     """Prints selected data to be viewed."""
     if list_data == "lists":
-        option_num = 0
+        list_num = 0
         print("Your lists.")
         for i in get_lists():
-            option_num += 1
+            list_num += 1
             print(f"[{option_num}]", i)
     else:
         selected_list = SHEET.get_worksheet(list_data)
-        view_data = selected_list.get_all_values()
+        view_items = selected_list.get_all_values()
         print()
         print(f"Viewing {selected_list.title} list")
         # Prints data in a table
@@ -113,19 +113,19 @@ def validate_data_input(*args):
         if len(args) == 2:
             if args[0] == "qty":
                 try:
-                    data_input = float(input(args[1]))
-                    return data_input
+                    qty_input = float(input(args[1]))
+                    return qry_input
                 except ValueError:
                     print("Invalid input. Please enter numbers only.")
             else:
                 try:
-                    item_input = input(args[1]).strip()
-                    if len(item_input) >= 3:
+                    data_input = input(args[1]).strip()
+                    if len(data_input) >= 3:
                         # Checks redundancy of entered list name.
-                        if args[0] == "new_list" and item_input in get_lists():
+                        if args[0] == "new_list" and data_input in get_lists():
                             print("List name already exists. Try another name.\n")
                         else:
-                            return item_input
+                            return data_input
                     else:
                         print("Invalid input.")
                         print("Please enter atleast 3 characters.")
