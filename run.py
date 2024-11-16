@@ -133,11 +133,17 @@ def validate_data_input(*args):
                             print(f"""
 List name already exists.
 Try another name.""")
+                        # Checks if input data for unit of measurement are numbers.
+                        elif args[0] == "unit" and data_input.isnumeric():
+                            print(f"""
+Invalid input.
+Please enter a unit of measurement.""")
                         else:
                             return data_input
                     else:
-                        print("Invalid input.")
-                        print("Please enter atleast 3 characters.")
+                        print(f"""
+Invalid input.
+Please enter atleast 3 characters.""")
                 except:
                     print("Invalid input.")
                     print("Please enter atleast 3 characters.")
