@@ -60,7 +60,7 @@ def view_list_data(list_data):
         print("Your lists.")
         for i in get_lists():
             list_num += 1
-            print(f"[{option_num}]", i)
+            print(f"[{list_num}]", i)
     else:
         selected_list = SHEET.get_worksheet(list_data)
         view_items = selected_list.get_all_values()
