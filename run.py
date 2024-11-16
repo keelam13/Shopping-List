@@ -63,7 +63,7 @@ def view_list_data(list_data):
             print(f"[{list_num}]", i)
     else:
         selected_list = SHEET.get_worksheet(list_data)
-        view_items = selected_list.get_all_values()
+        view_data= selected_list.get_all_values()
         print()
         print(f"Viewing {selected_list.title} list")
         # Prints data in a table
@@ -121,7 +121,7 @@ def validate_data_input(*args):
             if args[0] == "qty":
                 try:
                     qty_input = float(input(args[1]))
-                    return qry_input
+                    return qty_input
                 except ValueError:
                     print("Invalid input. Please enter numbers only.")
             else:
