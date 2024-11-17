@@ -145,8 +145,9 @@ Please enter a unit of measurement.""")
 Invalid input.
 Please enter atleast 3 characters.""")
                 except:
-                    print("Invalid input.")
-                    print("Please enter atleast 3 characters.")
+                    print(f"""
+Invalid input.
+Please enter atleast 3 characters.""")
         else:
             try:
                 select_num = int(input(args[1]))
