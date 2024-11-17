@@ -276,7 +276,6 @@ Are you sure you want to delete {item_to_del.value}?""")
                     "Please enter option number: ",
                     "Exit list menu",
                     "Add new item",
-                    "Edit an item",
                     "Delete an item"
                 )
                 to_do = validate_data_input(
