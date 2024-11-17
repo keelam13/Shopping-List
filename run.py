@@ -234,7 +234,6 @@ Please enter a number from the options.""")
                 "Please enter option number: ",
                 "Exit list menu",
                 "Add new item",
-                "Edit an item",
                 "Delete an item"
             )
             to_do = validate_data_input(
@@ -257,8 +256,6 @@ Please enter a number from the options.""")
                         unit_of_measurement
                     )
                 elif to_do == 2:
-                    print("Option 2 has been called")
-                elif to_do == 3:
                     try:
                         list_to_view = view_list_data(selected_list)
                         item_input = validate_data_input(
