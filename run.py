@@ -51,7 +51,8 @@ def update_list(shopping_list, *args):
     print(f"Adding {args[0]} to list...")
     update_list = SHEET.worksheet(shopping_list)
     update_list.append_row(args)
-    print(Back.GREEN +
+    print(
+        Back.GREEN +
         f"{args[0]} added successfully.",
         Style.RESET_ALL,
         "\n"
@@ -70,7 +71,7 @@ def view_list_data(list_data):
         print()
     else:
         selected_list = SHEET.get_worksheet(list_data)
-        view_data= selected_list.get_all_values()
+        view_data = selected_list.get_all_values()
         print()
         print(
             Back.CYAN +
@@ -164,7 +165,7 @@ def validate_data_input(*args):
                                 "Try another name.",
                                 Style.RESET_ALL
                             )
-                        # Checks if input data for unit of measurement are numbers.
+                        # Checks if input data is a number.
                         elif args[0] == "unit" and data_input.isnumeric():
                             print(
                                 Back.LIGHTRED_EX +
@@ -175,13 +176,15 @@ def validate_data_input(*args):
                         else:
                             return data_input
                     else:
-                        print(Back.LIGHTRED_EX +
+                        print(
+                            Back.LIGHTRED_EX +
                             "Invalid input."
                             "Please enter atleast 3 characters.",
                             Style.RESET_ALL
                         )
-                except:
-                    print(Back.LIGHTRED_EX +
+                except ValueError:
+                    print(
+                        Back.LIGHTRED_EX +
                         "Invalid input."
                         "Please enter atleast 3 characters.",
                         Style.RESET_ALL
@@ -192,13 +195,15 @@ def validate_data_input(*args):
                 if select_num <= args[2] and select_num >= 0:
                     return select_num
                 else:
-                    print(Back.LIGHTRED_EX +
+                    print(
+                        Back.LIGHTRED_EX +
                         "Invalid input."
                         "Please enter a number from the options.",
                         Style.RESET_ALL
                     )
             except ValueError:
-                print(Back.LIGHTRED_EX +
+                print(
+                    Back.LIGHTRED_EX +
                     "Invalid input."
                     "Please enter a number from the options.",
                     Style.RESET_ALL
@@ -249,7 +254,8 @@ def main():
                         unit_of_measurement
                     )
                 else:
-                    print(Back.LIGHTRED_EX +
+                    print(
+                        Back.LIGHTRED_EX +
                         "Invalid input."
                         "Please enter a number from the options.",
                         Style.RESET_ALL
