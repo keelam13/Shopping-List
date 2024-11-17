@@ -51,24 +51,35 @@ def update_list(shopping_list, *args):
     print(f"Adding {args[0]} to list...")
     update_list = SHEET.worksheet(shopping_list)
     update_list.append_row(args)
-    print(f"{args[0]} added successfully.\n")
+    print(Back.GREEN +
+        f"{args[0]} added successfully.",
+        Style.RESET_ALL,
+        "\n"
+    )
 
 
 def view_list_data(list_data):
     """Prints selected data to be viewed."""
     if list_data == "lists":
         list_num = 0
-        print("Your lists.")
+        print()
+        print(Back.CYAN + "Your lists.", Style.RESET_ALL)
         for i in get_lists():
             list_num += 1
             print(f"[{list_num}]", i)
+        print()
     else:
         selected_list = SHEET.get_worksheet(list_data)
         view_data= selected_list.get_all_values()
         print()
-        print(f"Viewing {selected_list.title} list")
+        print(
+            Back.CYAN +
+            f"Viewing {selected_list.title} list",
+            Style.RESET_ALL,
+            "\n"
+        )
         # Prints data in a table
-        print(tabulate(view_data), "\n")
+        print(tabulate(view_data))
         return selected_list
 
 
@@ -81,7 +92,13 @@ def delete_data(data, *args):
     else:
         args[0].delete_rows(args[1].row)
 
-    print(f"{data.capitalize()} successfully deleted.\n")
+    print(
+        Back.GREEN +
+        f"{data.capitalize()} "
+        "successfully deleted.",
+        Style.RESET_ALL,
+        "\n"
+    )
 
 
 def confirm_delete(data, *args):
@@ -99,7 +116,12 @@ def confirm_delete(data, *args):
             else:
                 delete_data("list", args[0])
         else:
-            print("Invalid option. Please enter a number from the options.")
+            print(
+                Back.LIGHTRED_EX +
+                "Invalid option."
+                "Please enter a number from the options.",
+                Style.RESET_ALL
+            )
         break
 
 
@@ -124,49 +146,68 @@ def validate_data_input(*args):
                     qty_input = float(input(args[1]))
                     return qty_input
                 except ValueError:
-                    print("Invalid input. Please enter numbers only.")
+                    print(
+                        Back.LIGHTRED_EX +
+                        "Invalid input."
+                        "Please enter numbers only.",
+                        Style.RESET_ALL
+                    )
             else:
                 try:
                     data_input = input(args[1]).strip()
                     if len(data_input) >= 3:
                         # Checks redundancy of entered list name.
                         if args[0] == "new_list" and data_input in get_lists():
-                            print(f"""
-List name already exists.
-Try another name.""")
+                            print(
+                                Back.LIGHTRED_EX +
+                                "List name already exists."
+                                "Try another name.",
+                                Style.RESET_ALL
+                            )
                         # Checks if input data for unit of measurement are numbers.
                         elif args[0] == "unit" and data_input.isnumeric():
-                            print(f"""
-Invalid input.
-Please enter a unit of measurement.""")
+                            print(
+                                Back.LIGHTRED_EX +
+                                "Invalid input."
+                                "Please enter a unit of measurement.",
+                                Style.RESET_ALL
+                            )
                         else:
                             return data_input
                     else:
-                        print(f"""
-Invalid input.
-Please enter atleast 3 characters.""")
+                        print(Back.LIGHTRED_EX +
+                            "Invalid input."
+                            "Please enter atleast 3 characters.",
+                            Style.RESET_ALL
+                        )
                 except:
-                    print(f"""
-Invalid input.
-Please enter atleast 3 characters.""")
+                    print(Back.LIGHTRED_EX +
+                        "Invalid input."
+                        "Please enter atleast 3 characters.",
+                        Style.RESET_ALL
+                    )
         else:
             try:
                 select_num = int(input(args[1]))
                 if select_num <= args[2] and select_num >= 0:
                     return select_num
                 else:
-                    print(f"""
-Invalid input.
-Please enter a number from the options.""")
+                    print(Back.LIGHTRED_EX +
+                        "Invalid input."
+                        "Please enter a number from the options.",
+                        Style.RESET_ALL
+                    )
             except ValueError:
-                print(f"""
-Invalid input.
-Please enter a number from the options.""")
+                print(Back.LIGHTRED_EX +
+                    "Invalid input."
+                    "Please enter a number from the options.",
+                    Style.RESET_ALL
+                )
 
 
 def main():
     """Run all program functions."""
-    print("Home Menu")
+    print(Fore.LIGHTYELLOW_EX + "Home Menu", Style.RESET_ALL)
     start_menu = menu(
         "Please enter option number: ",
         "Exit main menu",
@@ -182,7 +223,8 @@ def main():
                 "Please enter a name for the list: "
             )
             create_new_list(new_shopping_list)
-            print("New List Menu")
+            print()
+            print(Fore.LIGHTYELLOW_EX + "New List Menu", Style.RESET_ALL)
             new_list_menu = menu(
                 "Please enter option number: ",
                 "Exit new list menu",
@@ -207,10 +249,12 @@ def main():
                         unit_of_measurement
                     )
                 else:
-                    print(f"""
-Invalid option.
-Please enter a number from the options.""")
-                print("New List Menu")
+                    print(Back.LIGHTRED_EX +
+                        "Invalid input."
+                        "Please enter a number from the options.",
+                        Style.RESET_ALL
+                    )
+                print(Fore.LIGHTYELLOW_EX + "New List Menu", Style.RESET_ALL)
                 ticked = menu(
                     "Please enter option number: ",
                     "Exit new list menu",
@@ -221,7 +265,12 @@ Please enter a number from the options.""")
                     new_list_menu[0],
                     new_list_menu[1]
                 )
-            print("Your list have been updated.\n")
+            print(
+                Back.GREEN +
+                "Your list have been updated.",
+                Style.RESET_ALL,
+                "\n"
+            )
         elif option == 2:
             view_list_data("lists")
             your_lists = len(get_lists())
@@ -231,7 +280,8 @@ Please enter a number from the options.""")
                 your_lists
             ) - 1
             list_to_view = view_list_data(selected_list)
-            print("List Menu")
+            print()
+            print(Back.LIGHTYELLOW_EX + "List Menu", Style.RESET_ALL)
             view_list_menu = menu(
                 "Please enter option number: ",
                 "Exit list menu",
@@ -265,14 +315,29 @@ Please enter a number from the options.""")
                             "Enter item to delete: "
                         )
                         item_to_del = get_list_item(list_to_view, item_input)
-                        print(f"""
-Are you sure you want to delete {item_to_del.value}?""")
+                        print(
+                            f"Are you sure you want to delete "
+                            f"{Fore.LIGHTRED_EX}"
+                            f"{item_to_del.value}"
+                            f"{Style.RESET_ALL}"
+                            "?"
+                        )
                         confirm_delete("item", item_to_del, list_to_view)
                     except AttributeError:
-                        print("Sorry, item not found. Please try again.")
+                        print(
+                            Back.LIGHTRED_EX +
+                            "Sorry, item not found."
+                            "Please try again.",
+                            Style.RESET
+                        )
                 else:
-                    print("Invalid input. Please enter a number from options.")
-                print("List Menu")
+                    print(
+                        Back.LIGHTRED_EX +
+                        "Invalid input."
+                        "Please enter a number from options.",
+                        Style.RESET
+                    )
+                print(Back.LIGHTYELLOW_EX + "List Menu", Style.RESET_ALL)
                 view_list_menu = menu(
                     "Please enter option number: ",
                     "Exit list menu",
@@ -284,7 +349,12 @@ Are you sure you want to delete {item_to_del.value}?""")
                     view_list_menu[0],
                     view_list_menu[1]
                 )
-            print("Your list have been updated.\n")
+            print(
+                Back.GREEN +
+                "Your list have been updated.",
+                Style.RESET_ALL,
+                "\n"
+            )
         elif option == 3:
             try:
                 view_list_data("lists")
@@ -295,14 +365,30 @@ Are you sure you want to delete {item_to_del.value}?""")
                     your_lists
                 ) - 1
                 list_to_del = SHEET.get_worksheet(list_input)
-                print(f"Are you sure you want to delete {list_to_del.title}?")
+                print(
+                    "Are you sure you want to delete",
+                    f"{Fore.LIGHTRED_EX}"
+                    f"{list_to_del.title}"
+                    f"{Style.RESET_ALL}"
+                    "?"
+                )
                 confirm_delete("list", list_to_del)
             except AttributeError:
-                print("Sorry, list not found. Please try again.")
+                print(
+                    Back.LIGHTRED_EX +
+                    "Sorry, list not found."
+                    "Please try again.",
+                    Style.RESET_ALL
+                )
         else:
-            print("Invalid input. Please enter a number from options.")
+            print(
+                Back.LIGHTRED_EX +
+                "Invalid input."
+                "Please enter a number from options.",
+                Style.RESET_ALL
+            )
 
-        print("Home Menu")
+        print(Back.LIGHTYELLOW_EX + "Home Menu", Style.RESET_ALL)
         start_menu = menu(
             "Please enter option number: ",
             "Exit main menu",
@@ -312,11 +398,19 @@ Are you sure you want to delete {item_to_del.value}?""")
         )
         option = validate_data_input("menu", start_menu[0], start_menu[1])
 
-    print("Until next time, good bye!")
+    print(
+        Back.LIGHTMAGENTA_EX +
+        "Until next time, good bye!",
+        Style.RESET_ALL
+    )
 
 
 if __name__ == "__main__":
-    print("Welcome to your Shopping list.\n")
+    print(
+        Back.LIGHTGREEN_EX +
+        "Welcome to your Shopping list.",
+        Style.RESET_ALL
+    )
     view_list_data("lists")
-    print("What would you like to do?\n")
+    print(Back.LIGHTYELLOW_EX + "What would you like to do?", Style.RESET_ALL)
     main()
