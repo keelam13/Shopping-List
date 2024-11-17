@@ -11,9 +11,9 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('grocery_list')
+SHEET = GSPREAD_CLIENT.open('shopping_list')
 
-
+grocery
 def menu(message, *arg):
     """
     Provides user a menu for navigation.
@@ -39,16 +39,16 @@ def get_lists():
     return lists
 
 
-def get_list_item(grocery_list, entered_item):
+def get_list_item(shopping_list, entered_item):
     """Locates the item enetered by user from the list."""
-    item = grocery_list.find(entered_item, in_column=1)
+    item = shopping_list.find(entered_item, in_column=1)
     return item
 
 
-def update_list(grocery_list, *args):
+def update_list(shopping_list, *args):
     """Adds user data input to the a list."""
     print(f"Adding {args[0]} to list...")
-    update_list = SHEET.worksheet(grocery_list)
+    update_list = SHEET.worksheet(shopping_list)
     update_list.append_row(args)
     print(f"{args[0]} added successfully.\n")
 
@@ -104,7 +104,7 @@ def confirm_delete(data, *args):
 
 def create_new_list(list_name):
     """
-    Adds a worksheet for a new grocery list and name it based on user input.
+    Adds a worksheet for a new shopping list and name it based on user input.
     """
     new_worksheet = SHEET.add_worksheet(title=list_name, rows="100", cols="20")
     heading = ["Items", "Quantity", "Measurement"]
@@ -175,11 +175,11 @@ def main():
     option = validate_data_input("menu", start_menu[0], start_menu[1])
     while option != 0:
         if option == 1:
-            new_grocery_list = validate_data_input(
+            new_shopping_list = validate_data_input(
                 "new_list",
                 "Please enter a name for the list: "
             )
-            create_new_list(new_grocery_list)
+            create_new_list(new_shopping_list)
             print("New List Menu")
             new_list_menu = menu(
                 "Please enter option number: ",
@@ -200,7 +200,7 @@ def main():
                         "Enter unit of measurement: "
                     )
                     update_list(
-                        new_grocery_list,
+                        new_shopping_list,
                         item, quantity,
                         unit_of_measurement
                     )
@@ -315,7 +315,7 @@ Are you sure you want to delete {item_to_del.value}?""")
 
 
 if __name__ == "__main__":
-    print("Welcome to your Grocery list.\n")
+    print("Welcome to your Shopping list.\n")
     view_list_data("lists")
     print("What would you like to do?\n")
     main()
