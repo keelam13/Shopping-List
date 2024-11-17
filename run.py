@@ -13,7 +13,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('shopping_list')
 
-grocery
+
 def menu(message, *arg):
     """
     Provides user a menu for navigation.
