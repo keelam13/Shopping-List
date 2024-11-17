@@ -118,6 +118,7 @@ The code was also run through a [PEP8 Linter](https://pep8ci.herokuapp.com/) and
 ### Remaining Bugs
 
 1. Arrow keys, page up and page down are accepted when entering a list name or an item. And while the special characters (ex. ^[[D) appear on the spreadsheet, it does not show on the terminal.
+2. Item names can be added multiple times to the same list. 
  
 
 ## Credits
