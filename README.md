@@ -16,42 +16,48 @@ In order not to forget something, this project was inspired by the users constan
 
 ### Existing Features
 
+Colors are added for better user experience.
+
 ![Welcome](documentation/welcome-message.png)
 
 The users are welcomed at the start of the app and will be shown existing lists if there is any. The users are also asked what they would like to do:
  * Exit main menu - to exit the app
  * Add new list - to create and name a new list. When naming a list, input will be validated, it should not be empty,must have atleast 3 characters in it, and names must not be repeated.
-
+     Then users will also be given the options to:
+     - Exit new list menu - to go back to the main menu, or
+     - Add items - to add new items to the list, where the users will enter item, quantity and unit of measurement.
 ![New List](documentation/input-validation-list.png)
 
-     Then users will also be given the options to:
-      - Exit new list menu - to go back to the main menu, or
-      - Add items - to add new items to the list, where the users will enter item, quantity and unit of measurement.
+
  * View lists - to view the shopping list and the items in it. A numbered list of the shopping lists will be shown to the users where they can select the number of the list they want to view the items. 
-
-![View List](documentation/list-view.png)
-
- The users are shown a tabulated display of the items in the list. 
-
-![Items View](documentation/items-view.png)
-
      At this point the users will also be given the options to:
       - Exit list menu - to go back to the main menu, or
       - Add new item - to add items to the list, or
+      - Delete an item - to delete an item from the list. The items will be shown again for users to select which item to delete. The Users will be asked to enter the item they want to delete and will also be asked to confirm deletion of the item before proceeding to execute the deletion.
+
+![View List](documentation/list-view.png)
+
+The users are shown a tabulated display of the items in the list. 
+
+![Items View](documentation/items-view.png)
+
+Successfully adding items.
 
 ![Add Item](documentation/add-item-successful.png)
 
-     When adding the quantity of the item, the input will also be validated if the user entered a number, or else it will raise an invalid message.
+When adding the quantity of the item, the input will also be validated if the user entered a number, or else it will raise an invalid message.
 
 ![Qty validation](documentation/input-validation-qty.png)
 
-      - Delete an item - to delete an item from the list. The items will be shown again for users to select which item to delete. The Users will be asked to enter the item they want to delete and will also be asked to confirm deletion of the item before proceeding to execute the deletion.
+Sucessfully deleting an item.
 
 ![Del Item](documentation/delete-successful.png)
 
  * Delete list - to delete a list. The numbered list of shopping lists wil be shown again for users to select which list to delete. After entering which list, the users will also be asked to confirm deletion before proceeding to delete the list.
 
 ![Naming or Selecting List](documentation/input-validation-list-del.png)
+
+Sucessfully deleting a list.
 
 ![Del List](documentation/delete-successful-list.png)
 
