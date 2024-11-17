@@ -260,6 +260,7 @@ Please enter a number from the options.""")
                     print("Option 2 has been called")
                 elif to_do == 3:
                     try:
+                        list_to_view = view_list_data(selected_list)
                         item_input = validate_data_input(
                             "item",
                             "Enter item to delete: "
@@ -288,6 +289,7 @@ Are you sure you want to delete {item_to_del.value}?""")
             print("Your list have been updated.\n")
         elif option == 3:
             try:
+                view_list_data("lists")
                 your_lists = len(get_lists())
                 list_input = validate_data_input(
                     "menu",
