@@ -287,7 +287,7 @@ def main():
             ) - 1
             list_to_view = view_list_data(selected_list)
             print()
-            print(Back.LIGHTYELLOW_EX + "List Menu", Style.RESET_ALL)
+            print(Fore.LIGHTYELLOW_EX + "List Menu", Style.RESET_ALL)
             view_list_menu = menu(
                 "Please enter option number: ",
                 "Exit list menu",
@@ -343,7 +343,7 @@ def main():
                         "Please enter a number from options.",
                         Style.RESET
                     )
-                print(Back.LIGHTYELLOW_EX + "List Menu", Style.RESET_ALL)
+                print(Fore.LIGHTYELLOW_EX + "List Menu", Style.RESET_ALL)
                 view_list_menu = menu(
                     "Please enter option number: ",
                     "Exit list menu",
@@ -394,7 +394,7 @@ def main():
                 Style.RESET_ALL
             )
 
-        print(Back.LIGHTYELLOW_EX + "Home Menu", Style.RESET_ALL)
+        print(Fore.LIGHTYELLOW_EX + "Home Menu", Style.RESET_ALL)
         start_menu = menu(
             "Please enter option number: ",
             "Exit main menu",
@@ -418,5 +418,10 @@ if __name__ == "__main__":
         Style.RESET_ALL
     )
     view_list_data("lists")
-    print(Back.LIGHTYELLOW_EX + "What would you like to do?", Style.RESET_ALL)
+    print(
+        Back.LIGHTYELLOW_EX,
+        Fore.BLACK +
+        "What would you like to do?",
+        Style.RESET_ALL
+    )
     main()
